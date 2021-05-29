@@ -1,0 +1,38 @@
+<div id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center">FLCCE Resident Contact Information</h2>
+        <p class="text-center">If you would like to update your contact information, please email <a href="mailto:heatherblacksrq@yahoo.com">heatherblacksrq@yahoo.com</a></p>
+                  <div class="resident-container mb-5" background="/img/martini.jpg">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Unit</th>
+                          <th>Name</th>
+                          <th>Phone Number</th>
+                          <th>Alt Phone</th>
+                          <th>Email</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#each dbResidents}}
+                          <tr>
+                            <th>{{dataValues.unitNo}}</th>
+                            <th>{{dataValues.ownerFirstName}} {{dataValues.ownerLastName}}</th>
+                            <th>{{dataValues.phone1}}</th>
+                            <th>{{dataValues.phone2}}</th>
+                            <th>{{dataValues.email}}</th>
+                          </tr>
+                        {{/each}}
+                 
+                      </tbody>
+                    </table>
+                  </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>

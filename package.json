@@ -1,0 +1,48 @@
+{
+  "name": "classproject2",
+  "version": "1.0.0",
+  "description": "an app that tracks assessments for my condo association",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint --quiet .",
+    "fix": "eslint --fix .",
+    "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamontblack1/classProject2.git"
+  },
+  "keywords": [
+    "flcce"
+  ],
+  "author": "longqi coding",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lamontblack1/classProject2/issues"
+  },
+  "homepage": "https://github.com/lamontblack1/classProject2#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "mocha": "^8.4.0",
+    "prettier": "^2.3.0",
+    "sequelize-cli": "^6.2.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.6.2"
+  }
+}

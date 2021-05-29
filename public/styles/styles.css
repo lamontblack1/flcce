@@ -1,0 +1,52 @@
+/* FEC5BB, E8E8E4, FFD7BA, maybe FEC89A */
+
+.list-group-item {
+  line-height: 2.5;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #fafaf6;
+  background-image: url("/img/martini.jpg");
+  background-size: 230px;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  /* color: rgba(40, 79, 54); */
+}
+
+#home {
+  color: #304639;
+}
+
+.resident-container {
+  border: 2px inset #fec5bb;
+  background-color: #fafaf6;
+}
+.navbar {
+  background-color: #fec5bb;
+  color: rgb(122, 151, 132);
+}
+
+/* for old to do list, to be updated */
+.dept-list {
+  margin: 0 auto;
+  /* margin-top: 75px; */
+}
+
+input.new-item:focus {
+  outline: none;
+}
+
+.list-group-item > button.delete {
+  float: right;
+  height: 30px;
+  margin-left: 5px;
+  padding-top: 3px;
+}
+
+.list-group-item {
+  padding: 5, 10, 5, 10;
+}
+.edit {
+  width: 100%;
+}
