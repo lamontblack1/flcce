@@ -8,14 +8,20 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: #fafaf6;
   background-image: url("/img/martini.jpg");
-  background-size: 230px;
+  background-size: 12%;
   background-repeat: no-repeat;
   background-origin: border-box;
+  background-position: 0px 125px;
   /* color: rgba(40, 79, 54); */
 }
 
 #home {
   color: #304639;
+}
+
+p {
+  font-size: 20px;
+  line-height: 26px;
 }
 
 .resident-container {
@@ -50,3 +56,22 @@ input.new-item:focus {
 .edit {
   width: 100%;
 }
+
+/* @media screen and (max-width: 768px) {
+  .card {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .navbar {
+    font-size: 46px;
+    line-height: 48px;
+  }
+  body {
+    font-size: 48px;
+    line-height: 50px;
+  }
+
+} */
