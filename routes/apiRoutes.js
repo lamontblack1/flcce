@@ -5,6 +5,9 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("../config/passport");
 
+const axios = require("axios");
+const cheerio = require("cheerio");
+
 module.exports = function (app) {
   // Get all residents
   app.get("/api/residents", isAuthenticatedAsGuest, function (req, res) {
@@ -106,5 +109,30 @@ module.exports = function (app) {
     db.Money.destroy({ where: { id: req.params.id } }).then(function (dbMoney) {
       res.json(dbMoney);
     });
+  });
+
+  //get the Publix Bogos
+  app.get("/api/bogos", function (req, res) {
+    axios
+      .get(
+        "https://accessibleweeklyad.publix.com/PublixAccessibility/BrowseByListing/ByCategory/?ListingSort=8&StoreID=2628706&CategoryID=5232540"
+      )
+      .then(function (response) {
+        let item = "";
+        let items = [];
+        // Load the HTML into cheerio and save it to a variable
+        // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+        var $ = cheerio.load(response.data);
+        //each bogo item name is in h2, with class ellipsis_text. next make sure there are no duplicates - annoying!
+        $("h2.ellipsis_text").each(function (i, element) {
+          if (item !== $(element).text()) {
+            item = $(element).text();
+            items.push({
+              item: item
+            });
+          }
+        });
+        res.json(items);
+      });
   });
 };

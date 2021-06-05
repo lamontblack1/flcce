@@ -34,7 +34,9 @@
     "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0-rc.9",
     "connect-flash": "^0.1.1",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",

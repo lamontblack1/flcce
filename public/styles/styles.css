@@ -24,6 +24,14 @@ p {
   line-height: 26px;
 }
 
+.bogo {
+  margin: 2px 0 2px 0;
+}
+
+#bogo-list {
+  background-color: #fdf9f9;
+}
+
 .resident-container {
   border: 2px inset #fec5bb;
   background-color: #fafaf6;
