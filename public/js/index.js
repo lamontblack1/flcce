@@ -11,54 +11,41 @@ $(document).ready(function () {
   });
 });
 
-// The API object contains methods for each kind of request we'll make
-// var API = {
-//   saveExample: function(example) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/examples",
-//       data: JSON.stringify(example)
-//     });
-//   },
-//   getExamples: function() {
-//     return $.ajax({
-//       url: "api/examples",
-//       type: "GET"
-//     });
-//   },
-//   deleteExample: function(id) {
-//     return $.ajax({
-//       url: "api/examples/" + id,
-//       type: "DELETE"
-//     });
-//   }
-// };
+//get the weather and put it on the page
+var APIKey = "94531e392a37140471434fb0ff8281ea";
 
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-// var handleFormSubmit = function(event) {
-//   event.preventDefault();
+// Here we are building the URL we need to query the database
+var queryURL =
+  "https://api.openweathermap.org/data/2.5/weather?" +
+  "zip=34232&units=imperial&appid=" +
+  APIKey;
 
-//   var example = {
-//     text: $exampleText.val().trim(),
-//     description: $exampleDescription.val().trim()
-//   };
+// Here we run our AJAX call to the OpenWeatherMap API
+$.ajax({
+  url: queryURL,
+  method: "GET"
+})
+  // We store all of the retrieved data inside of an object called "response"
+  .then(function (response) {
+    const temp = "Temp: " + response.main.temp + " F";
+    const humidity = "Humidity: " + response.main.humidity + "%";
+    const wind = "Wind Speed: " + parseInt(response.wind.speed) + " mph";
+    let sunsetTimestamp = parseInt(response.sys.sunset) * 1000;
+    const d = new Date(sunsetTimestamp);
+    let sunset = d.getHours() - 12;
+    if (parseInt(d.getMinutes()) < 10) {
+      sunset += ":0" + d.getMinutes() + " PM";
+    } else {
+      sunset += ":" + d.getMinutes() + " PM";
+    }
 
-//   if (!(example.text && example.description)) {
-//     alert("You must enter an example text and description!");
-//     return;
-//   }
-
-//   API.saveExample(example).then(function() {
-//     refreshExamples();
-//   });
-
-//   $exampleText.val("");
-//   $exampleDescription.val("");
-// };
+    // Transfer content to HTML
+    const $weather = $("#weatherContainer");
+    $weather.append("<p class='h6'>" + temp + "</p>");
+    $weather.append("<p class='h6'>" + humidity + "</p>");
+    $weather.append("<p class='h6'>" + wind + "</p>");
+    $weather.append("<p class='h6'>Sunset: " + sunset + "</p>");
+  });
 
 // Add event listeners to the submit and delete buttons
 // $submitBtn.on("click", handleFormSubmit);

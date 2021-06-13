@@ -11,7 +11,7 @@ body {
   background-size: 12%;
   background-repeat: no-repeat;
   background-origin: border-box;
-  background-position: 0px 125px;
+  background-position: 0% 2%;
   /* color: rgba(40, 79, 54); */
 }
 
@@ -30,6 +30,11 @@ p {
 
 #bogo-list {
   background-color: #fdf9f9;
+}
+
+#bogo-card {
+  position: relative;
+  top: 9%;
 }
 
 .resident-container {
@@ -70,16 +75,23 @@ input.new-item:focus {
     font-size: 16px;
     line-height: 20px;
   }
-}
+}  */
 
 @media screen and (max-width: 490px) {
-  .navbar {
+  /* .navbar {
     font-size: 46px;
     line-height: 48px;
   }
   body {
     font-size: 48px;
     line-height: 50px;
+  } */
+
+  body {
+    background-position: 95% 1.5%;
   }
 
-} */
+  #bogo-card {
+    position: static;
+  }
+}
