@@ -41,10 +41,10 @@ Simply click the "FLCCE Condo Manager" link at the top of this readme page. See 
 
 ### Here is a view of authentication using Flash:
 
-![Authentication gif](https://lamontblack1.github.io/flcce/public/img/example1.gif)
+![Authentication gif](https://github.com/lamontblack1/flcce/public/img/example1.gif)
 
 ### Here is a a view of data entry:
 
-![Transaction Entry Gif](https://lamontblack1.github.io/flcce/public/img/example1.gif)
+![Transaction Entry Gif](https://github.com/lamontblack1/flcce/public/img/example1.gif)
 
 Note that the Sub Department dropdown populates based on the Department dropdown choice
