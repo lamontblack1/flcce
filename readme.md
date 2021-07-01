@@ -45,6 +45,6 @@ Simply click the "FLCCE Condo Manager" link at the top of this readme page. See 
 
 ### Here is a a view of data entry:
 
-![Transaction Entry Gif]("./public/img/example2.gif")
+![Transaction Entry Gif](https://github.com/lamontblack1/flcce/blob/main/public/img/example2.gif?raw=true)
 
 Note that the Sub Department dropdown populates based on the Department dropdown choice
