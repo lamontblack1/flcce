@@ -48,7 +48,7 @@ $(document).ready(function () {
       incomeOrExpense: $("#incomeOrExpense").val().trim(),
       amount: $("#amount").val().trim(),
       invoiceNo: $("#invoiceNo").val().trim(),
-      itemDate: myDate.toISODate(),
+      itemDate: myDate.toISODate().toString(),
       forMonthId: parseInt($("#forMonth").val()),
       forYear: parseInt($("#forYear").val().trim()),
       deptId: parseInt($("#dept").val().trim()),
@@ -57,7 +57,7 @@ $(document).ready(function () {
       payerOrPayee: $("#payerOrPayee").val().trim(),
       description: $("#description").val().trim(),
       note: $("#note").val().trim(),
-      updatedBy: $("#updatedBy").val().trim(),
+      updatedBy: $("#updatedBy").val().trim()
     };
     console.log(newTransact);
     //  createdAt: CURRENT_TIMESTAMP,
@@ -133,7 +133,7 @@ $(document).ready(function () {
     var id = transactData.id;
     $.ajax({
       method: "DELETE",
-      url: "/api/transacts/" + id,
+      url: "/api/transacts/" + id
     }).then(function () {
       location.reload();
     });

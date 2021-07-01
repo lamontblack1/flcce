@@ -70,6 +70,14 @@ input.new-item:focus {
   width: 100%;
 }
 
+#board-wrapper {
+  border-width: 2px !important;
+}
+
+.board-p {
+  margin-bottom: 5px;
+}
+
 /* @media screen and (max-width: 768px) {
   .card {
     font-size: 16px;
