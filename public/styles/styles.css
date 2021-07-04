@@ -28,7 +28,10 @@ p {
   margin: 2px 0 2px 0;
 }
 
-#bogo-list {
+#bogo-list,
+#restaurants,
+#links,
+#weatherContainer {
   background-color: #fdf9f9;
 }
 
