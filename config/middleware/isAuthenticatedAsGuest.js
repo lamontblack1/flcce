@@ -3,6 +3,6 @@ module.exports = function isAuthenticatedAsGuest(req, res, next) {
     return next();
   }
   return res.render("login", {
-    message: "You must login to view the list residents."
+    message: "You must login to view the list of residents."
   });
 };

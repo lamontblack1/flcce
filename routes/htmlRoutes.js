@@ -59,6 +59,10 @@ module.exports = function (app) {
   app.get("/condodocs", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/condoDocs.pdf"));
   });
+
+  app.get("/leakprotocol", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/leakProtocol.pdf"));
+  });
   // Load example page and pass in an example by id
   // app.get("/example/:id", function (req, res) {
   //   db.Example.findOne({ where: { id: req.params.id } }).then(function (
