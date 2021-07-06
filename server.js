@@ -19,7 +19,7 @@ app.use(express.static("public"));
 app.use(
   session({
     cookie: {
-      maxAge: 600000
+      maxAge: 6000000
     },
     secret: "some secret",
     resave: false,
