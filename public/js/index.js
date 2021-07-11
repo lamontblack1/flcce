@@ -47,5 +47,14 @@ $.ajax({
     $weather.append("<p class='h6'>Sunset: " + sunset + "</p>");
   });
 
+$.getJSON(
+  "https://api.countapi.xyz/hit/flccesrq.com/visits",
+  function (response) {
+    $("#visits").text(
+      "This page has been visited " + response.value + " times since July 2021"
+    );
+  }
+);
+
 // Add event listeners to the submit and delete buttons
 // $submitBtn.on("click", handleFormSubmit);
