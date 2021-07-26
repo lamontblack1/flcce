@@ -147,7 +147,21 @@
                         </div>
                         <div class="form-group col-sm-2">
                             <label for="payerOrPayee">Unit No/Payee</label>
-                            <input class="form-control" placeholder="ie 2505-4 or Vendor" id="payerOrPayee" type="text" required />
+                            <input class="form-control" list="vendors" placeholder="ie 2505-4 or Vendor" id="payerOrPayee" required >
+                                <datalist id="vendors">
+                                    <option value="All American Pest">
+                                    <option value="Comcast">
+                                    <option value="First Insurance">
+                                    <option value="Forest Lakes Reserve Fund">
+                                    <option value="FPL">
+                                    <option value="Jordan’s Pool Service">
+                                    <option value="Laundry Quarters">
+                                    <option value="Lawn Service">
+                                    <option value="Pluris/Water">
+                                    <option value="Washco">
+                                </datalist>
+                                
+                            </input>
                         </div>
                         <div class="invalid-feedback">
                             Required
