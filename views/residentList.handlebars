@@ -5,29 +5,32 @@
         <h2 class="text-center">FLCCE Resident Contact Information</h2>
         <p class="text-center">If you would like to update your contact information, please email <a href="mailto:heatherblacksrq@yahoo.com">heatherblacksrq@yahoo.com</a></p>
                   <div class="resident-container mb-5" background="/img/martini.jpg">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Unit</th>
-                          <th>Name</th>
-                          <th>Phone Number</th>
-                          <th>Alt Phone</th>
-                          <th>Email</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {{#each dbResidents}}
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
                           <tr>
-                            <th>{{dataValues.unitNo}}</th>
-                            <th>{{dataValues.ownerFirstName}} {{dataValues.ownerLastName}}</th>
-                            <th>{{dataValues.phone1}}</th>
-                            <th>{{dataValues.phone2}}</th>
-                            <th>{{dataValues.email}}</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Alt Phone</th>
+                            <th scope="col">Email</th>
                           </tr>
-                        {{/each}}
-                 
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {{#each dbResidents}}
+                            <tr scope="row">
+                              <th>{{dataValues.unitNo}}</th>
+                              <th>{{dataValues.ownerFirstName}} {{dataValues.ownerLastName}}</th>
+                              <th>{{dataValues.phone1}}</th>
+                              <th>{{dataValues.phone2}}</th>
+                              <th>{{dataValues.email}}</th>
+                            </tr>
+                          {{/each}}
+                  
+                        </tbody>
+                      </table>
+                    </div>
+                      
                   </div>
 
     </div>

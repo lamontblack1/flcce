@@ -129,14 +129,16 @@ $(document).ready(function () {
 
   // Function for handling what happens when the delete button is pressed
   function handleDeleteButtonPress() {
-    let transactData = $(this).parent("td").parent("tr").data("transact");
-    var id = transactData.id;
-    $.ajax({
-      method: "DELETE",
-      url: "/api/transacts/" + id
-    }).then(function () {
-      location.reload();
-    });
+    if (confirm("Are you sure you want to delete this entry?")) {
+      let transactData = $(this).parent("td").parent("tr").data("transact");
+      var id = transactData.id;
+      $.ajax({
+        method: "DELETE",
+        url: "/api/transacts/" + id
+      }).then(function () {
+        location.reload();
+      });
+    }
   }
 
   function populateDeptDropdown() {

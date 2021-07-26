@@ -40,10 +40,10 @@ p {
   top: 9%;
 }
 
-.resident-container {
+/* .resident-container {
   border: 2px inset #fec5bb;
   background-color: #fafaf6;
-}
+} */
 .navbar {
   background-color: #fec5bb;
   color: rgb(122, 151, 132);
