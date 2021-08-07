@@ -7,11 +7,15 @@ const passport = require("../config/passport");
 
 const axios = require("axios");
 const cheerio = require("cheerio");
+// const { notLike } = require("sequelize/types/lib/operators");
+const Op = require("sequelize").Op;
 
 module.exports = function (app) {
-  // Get all residents
+  // Get all residents where the unit number does not have 'prev' in it, since they are inactive
   app.get("/api/residents", isAuthenticatedAsGuest, function (req, res) {
-    db.Resident.findAll({}).then(function (dbResidents) {
+    db.Resident.findAll({ unitNo: { [Op.notLike]: "%prev%" } }).then(function (
+      dbResidents
+    ) {
       res.render("residentList", { dbResidents });
     });
   });
