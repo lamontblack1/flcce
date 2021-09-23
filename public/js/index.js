@@ -14,7 +14,7 @@ $(document).ready(function () {
 //get the weather and put it on the page
 var APIKey = "94531e392a37140471434fb0ff8281ea";
 
-// Here we are building the URL we need to query the database
+// Here we are building the URL for the weather
 var queryURL =
   "https://api.openweathermap.org/data/2.5/weather?" +
   "zip=34232&units=imperial&appid=" +
@@ -27,8 +27,10 @@ $.ajax({
 })
   // We store all of the retrieved data inside of an object called "response"
   .then(function (response) {
+    // console.log(response);
     const temp = "Temp: " + response.main.temp + " F";
     const humidity = "Humidity: " + response.main.humidity + "%";
+    const pressure = "Pressure: " + response.main.pressure;
     const wind = "Wind Speed: " + parseInt(response.wind.speed) + " mph";
     let sunsetTimestamp = parseInt(response.sys.sunset) * 1000;
     const d = new Date(sunsetTimestamp);
@@ -43,15 +45,59 @@ $.ajax({
     const $weather = $("#weatherContainer");
     $weather.append("<p class='h6'>" + temp + "</p>");
     $weather.append("<p class='h6'>" + humidity + "</p>");
+    $weather.append(
+      "<p class='h6'>" +
+        pressure +
+        " mbar (" +
+        parseInt(0.75006 * parseInt(response.main.pressure)) +
+        " mmHg)</p>"
+    );
     $weather.append("<p class='h6'>" + wind + "</p>");
     $weather.append("<p class='h6'>Sunset: " + sunset + "</p>");
+
+    var DateTime = luxon.DateTime;
+    $.get(
+      "https://api.openweathermap.org/data/2.5/onecall?lat=27.31&lon=-82.49&exclude=minutely,hourly&units=imperial&appid=67058c0a4916682129e32ab03c8f22d4",
+      function (data) {
+        // console.log(data);
+        $weather.append(
+          "<p class='h6'>UV Index This Hour: " + data.current.uvi + "</p>"
+        );
+        $weather.append(
+          "<hr><p class='text-center h6'>Chance of Rain<br>(High-Low)</p>"
+        );
+        for (let i = 0; i < 5; i++) {
+          const dt = DateTime.fromSeconds(data.daily[i].dt);
+          let dayName = "";
+          if (i === 0) {
+            dayName = "Today";
+          } else {
+            dayName = dt.toFormat("ccc");
+          }
+          // console.log(dt.toFormat("cccc"));
+          // console.log(dt.toLocaleString(DateTime.DATE_SHORT));
+          $weather.append(
+            "<p class='h6'<span>" +
+              dayName +
+              ": " +
+              parseInt(100 * data.daily[i].pop) +
+              "%   (" +
+              parseInt(data.daily[i].temp.min) +
+              "-" +
+              parseInt(data.daily[i].temp.max) +
+              ")</span><br>"
+          );
+        }
+      }
+    );
   });
 
+// This is the counter for how many times the page has been visited
 $.getJSON(
   "https://api.countapi.xyz/hit/flccesrq.com/visits",
   function (response) {
     $("#visits").text(
-      "This page has been visited " + response.value + " times since July 2021"
+      "This page has been visited " + response.value + " times"
     );
   }
 );

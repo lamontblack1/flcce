@@ -242,6 +242,9 @@
               <hr>
             </div>
           </div>
+          {{!-- Radar map  --}}
+          <div id='printoutPanel'></div>
+          <div id='myMap' style='width: 100%; height: 300px;'></div>
           {{!-- <p class="text-center">Siesta Key Today (only visible on desktop)</p>
           <video id="mediaplaybackdiv_videoplayer" muted="" preload="none"
             style="width: 100%; background-color: rgb(0, 0, 0); display: block; object-fit: fill;"
@@ -261,7 +264,7 @@
               src="https://public.earthcam.net/tJ90CoLmq7TzrY396Yd88M_8UtUi8sJ7G1xSGC3lcMg!"></iframe>
           </a>
           
-          <a href="https://www.youtube.com/watch?v=ThZRNYIZU8Q" target="_blank">Downtown Live Cam</a>
+          {{!-- <a href="https://www.youtube.com/watch?v=ThZRNYIZU8Q" target="_blank">Downtown Live Cam</a> --}}
           <br>
           <a href="https://www.youtube.com/watch?v=NLhxcyzXQxM" target="_blank">Another Siesta Key Live Cam</a>
 
@@ -320,5 +323,33 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer/dist/bouncer.polyfills.min.js"></script>
+
 <script src="/js/index.js"></script>
+
+{{!-- Radar Map  --}}
+            <script type='text/javascript'>
+              function loadMapScenario() {
+                var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                  /* No need to set credentials if already passed in URL */
+                  center: new Microsoft.Maps.Location(27.31, -82.49),
+                  zoom: 8,
+                });
+                var urlTemplate = 'https://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{zoom}/{x}/{y}.png';
+                var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
+                var tileSources = [];
+                for (var i = 0; i < timestamps.length; i++) {
+                  var tileSource = new Microsoft.Maps.TileSource({
+                    uriConstructor: urlTemplate.replace('{timestamp}', timestamps[i])
+                  });
+                  tileSources.push(tileSource);
+                }
+                var animatedLayer = new Microsoft.Maps.AnimatedTileLayer({ mercator: tileSources, frameRate: 200 });
+                map.layers.insert(animatedLayer);
+
+              }
+            </script>
+            <script type='text/javascript'
+              src='https://www.bing.com/api/maps/mapcontrol?key=ApaotqbUA4LHStDSCTIwFdSzneMdsG6jG-9yrDKUIzfJBE5TH18UJ5FoX0pKWKRc&callback=loadMapScenario'
+              async defer></script>
+<!-- End radar map -->
 
