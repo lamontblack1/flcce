@@ -9,6 +9,16 @@ $(document).ready(function () {
       );
     }
   });
+  // get Marcos deal and populate the dropdown
+  $.get("api/marcos", function (list) {
+    for (let i = 0; i < list.length; i++) {
+      $("#marcosDeals").append(
+        "<a class='dropdown-item small text-wrap' href='#'>" +
+          list[i].item +
+          "</a>"
+      );
+    }
+  });
 });
 
 //get the weather and put it on the page
@@ -20,7 +30,7 @@ var queryURL =
   "zip=34232&units=imperial&appid=" +
   APIKey;
 
-// Here we run our AJAX call to the OpenWeatherMap API
+// Here we run our AJAX call to
 $.ajax({
   url: queryURL,
   method: "GET"
@@ -28,7 +38,7 @@ $.ajax({
   // We store all of the retrieved data inside of an object called "response"
   .then(function (response) {
     // console.log(response);
-    const temp = "Temp: " + response.main.temp + " F";
+    const temp = "Temp: " + Math.round(response.main.temp) + "\xB0 F";
     const humidity = "Humidity: " + response.main.humidity + "%";
     const pressure = "Pressure: " + response.main.pressure;
     const wind = "Wind Speed: " + parseInt(response.wind.speed) + " mph";
@@ -64,7 +74,7 @@ $.ajax({
           "<p class='h6'>UV Index This Hour: " + data.current.uvi + "</p>"
         );
         $weather.append(
-          "<hr><p class='text-center h6'>Chance of Rain<br>(High-Low)</p>"
+          "<hr><p class='text-center h6'>Rain Chance | Hi-Lo Temp</p>"
         );
         for (let i = 0; i < 5; i++) {
           const dt = DateTime.fromSeconds(data.daily[i].dt);
@@ -81,11 +91,11 @@ $.ajax({
               dayName +
               ": " +
               parseInt(100 * data.daily[i].pop) +
-              "%   (" +
+              "%  |  " +
               parseInt(data.daily[i].temp.min) +
-              "-" +
+              "\xB0-" +
               parseInt(data.daily[i].temp.max) +
-              ")</span><br>"
+              "\xB0</span><br>"
           );
         }
       }

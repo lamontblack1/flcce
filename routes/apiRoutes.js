@@ -139,4 +139,27 @@ module.exports = function (app) {
         res.json(items);
       });
   });
+
+  //get the Marcos Deals
+  app.get("/api/marcos", function (req, res) {
+    axios.get("https://www.marcos.com").then(function (response) {
+      let item = "";
+      let items = [];
+      // Load the HTML into cheerio and save it to a variable
+      // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+      var $ = cheerio.load(response.data);
+      //each bogo item name is in h2, with class ellipsis_text. next make sure there are no duplicates - annoying!
+      $("div.m-tile--pizza").each(function (i, element) {
+        item = $(element).text();
+        item = item.replace("Order Now", "");
+        item = item.replace("Price & participation may vary.", "");
+        item = item.replace("Limited time only. ", "");
+        item = item.replace(/\s+/g, " ").trim();
+        items.push({
+          item: item
+        });
+      });
+      res.json(items);
+    });
+  });
 };
