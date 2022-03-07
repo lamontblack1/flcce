@@ -41,7 +41,28 @@ $.ajax({
     const temp = "Temp: " + Math.round(response.main.temp) + "\xB0 F";
     const humidity = "Humidity: " + response.main.humidity + "%";
     const pressure = "Pressure: " + response.main.pressure;
-    const wind = "Wind Speed: " + parseInt(response.wind.speed) + " mph";
+    //convert degrees to direction
+    const val = parseInt(parseInt(response.wind.deg) / 22.5 + 0.5);
+    const arr = [
+      "N",
+      "NNE",
+      "NE",
+      "ENE",
+      "E",
+      "ESE",
+      "SE",
+      "SSE",
+      "S",
+      "SSW",
+      "SW",
+      "WSW",
+      "W",
+      "WNW",
+      "NW",
+      "NNW"
+    ];
+    const dir = arr[val % 16];
+    const wind = "Wind: " + parseInt(response.wind.speed) + " mph " + dir;
     let sunsetTimestamp = parseInt(response.sys.sunset) * 1000;
     const d = new Date(sunsetTimestamp);
     let sunset = d.getHours() - 12;
