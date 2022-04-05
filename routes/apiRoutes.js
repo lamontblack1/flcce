@@ -140,6 +140,127 @@ module.exports = function (app) {
       });
   });
 
+  //get the Sarasota Events
+  app.get("/api/events", function (req, res) {
+    // const month = [
+    //   "January",
+    //   "February",
+    //   "March",
+    //   "April",
+    //   "May",
+    //   "June",
+    //   "July",
+    //   "August",
+    //   "September",
+    //   "October",
+    //   "November",
+    //   "December"
+    // ];
+
+    // const d = new Date();
+    // const monthName = month[d.getMonth()];
+
+    // const months = {
+    //   Jan: "January",
+    //   Feb: "February",
+    //   Mar: "March",
+    //   Apr: "April",
+    //   May: "May",
+    //   Jun: "June",
+    //   Jul: "July",
+    //   Aug: "August",
+    //   Sep: "September",
+    //   Oct: "October",
+    //   Nov: "November",
+    //   Dec: "December"
+    // };
+
+    const months = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12"
+    };
+
+    const d = new Date();
+    const currentMonth = d.getMonth() + 1;
+    const currentDay = d.getDate();
+    let yearNum = d.getFullYear();
+
+    let eventsList = [];
+
+    let url = "https://www.eventbrite.com/d/fl--sarasota/events--this-weekend/";
+    axios.get(url).then(function (response) {
+      let item = "";
+      let link = "";
+      let dt = "";
+      // Load the HTML into cheerio and save it to a variable
+      // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+      var $ = cheerio.load(response.data);
+      $("div.eds-event-card-content__primary-content").each(function (
+        i,
+        element
+      ) {
+        //check to make sure there are no duplicated events
+        if (item !== $(element).children("a").children("h3").text()) {
+          item = $(element).children("a").children("h3").text();
+
+          if (!item.includes("spirit") && !item.includes("Metaphysical")) {
+            link = $(element).children("a").attr("href");
+            dt = $(element)
+              .children(".eds-event-card-content__sub-title")
+              .text();
+            // if the date says "tomorrow" then adjust and get the date in utc format
+            console.log(dt);
+            console.log();
+
+            if (dt.substring(0, 8) === "Tomorrow") {
+              const eventDateUTC = d.setDate(d.getDate() + 1);
+            } else if (dt.substring(0, 5) === "Today") {
+              //you have to construct the date the same as you do a little later
+              const eventDateUTC = d.getUTCDate();
+              console.log(d);
+              console.log(eventDateUTC + "sdfsdfsf");
+            } else {
+              const dateSplit = dt.split(",");
+              const daySplit = dateSplit[1].trim().split(" ");
+              const shortMonthName = daySplit[0].trim();
+              const getMonthNum = months[shortMonthName];
+              if (parseInt(getMonthNum) < currentMonth) {
+                yearNum += 1;
+              }
+              let dayNum = parseInt(daySplit[1].trim());
+              if (dayNum < 10) {
+                dayNum = "0" + dayNum;
+              }
+
+              //construct date here and add it as a date to the object
+              const eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
+            }
+            console.log(eventDateUTC);
+            eventsList.push({
+              event: item,
+              url: link,
+              eventDate: eventDateUTC
+            });
+          }
+        }
+      });
+      eventsList.sort(function (a, b) {
+        return a.eventDate - b.eventDate;
+      });
+      res.json(eventsList);
+    });
+  });
+
   //get the Marcos Deals
   app.get("/api/marcos", function (req, res) {
     axios.get("https://www.marcos.com").then(function (response) {

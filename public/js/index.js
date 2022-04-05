@@ -19,6 +19,11 @@ $(document).ready(function () {
       );
     }
   });
+
+  // $.get("api/events", function (events) {
+
+  //   console.log(events);
+  // });
 });
 
 //get the weather and put it on the page

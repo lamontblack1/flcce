@@ -63,6 +63,14 @@ module.exports = function (app) {
   app.get("/leakprotocol", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/leakProtocol.pdf"));
   });
+
+  app.get("/budgetPerformanceSheet", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/budgetPerformanceSheet.pdf"));
+  });
+
+  app.get("/yearEndBalanceSheet", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/yearEndBalanceSheet.pdf"));
+  });
   // Load example page and pass in an example by id
   // app.get("/example/:id", function (req, res) {
   //   db.Example.findOne({ where: { id: req.params.id } }).then(function (
