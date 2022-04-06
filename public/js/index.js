@@ -20,10 +20,50 @@ $(document).ready(function () {
     }
   });
 
-  // $.get("api/events", function (events) {
+  $.get("api/events", function (events) {
+    console.log(events);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
 
-  //   console.log(events);
-  // });
+    let datePlacemark = "";
+    let strHtml = "";
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+
+      const eventDate = new Date(event.eventDate); //this has to be fixed
+      const dateDay = parseInt(eventDate.getMonth());
+      const eventMonthDay = months[dateDay] + " " + eventDate.getDate();
+      const eventLink =
+        "<p class='h6'><a href='" +
+        event.url +
+        "' target='_blank'>" +
+        event.event +
+        "</a></p>";
+      if (eventMonthDay !== datePlacemark) {
+        strHtml =
+          "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
+          eventMonthDay +
+          "</b></h5>" +
+          eventLink;
+      } else {
+        strHtml = eventLink;
+      }
+      datePlacemark = eventMonthDay;
+      $("#eventsList").append(strHtml);
+    }
+  });
 });
 
 //get the weather and put it on the page

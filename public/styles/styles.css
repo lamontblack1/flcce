@@ -31,7 +31,8 @@ p {
 #bogo-list,
 #restaurants,
 #links,
-#weatherContainer {
+#weatherContainer,
+#eventsList {
   background-color: #fdf9f9;
 }
 

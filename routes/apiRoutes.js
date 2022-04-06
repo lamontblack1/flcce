@@ -200,8 +200,10 @@ module.exports = function (app) {
     let url = "https://www.eventbrite.com/d/fl--sarasota/events--this-weekend/";
     axios.get(url).then(function (response) {
       let item = "";
+      let lastItem = "";
       let link = "";
       let dt = "";
+      let eventDateUTC;
       // Load the HTML into cheerio and save it to a variable
       // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
       var $ = cheerio.load(response.data);
@@ -210,24 +212,23 @@ module.exports = function (app) {
         element
       ) {
         //check to make sure there are no duplicated events
-        if (item !== $(element).children("a").children("h3").text()) {
-          item = $(element).children("a").children("h3").text();
-
+        item = $(element).children("a").children("h3").text();
+        item = item.substring(0, item.length / 2);
+        if (item !== lastItem) {
+          lastItem = item;
           if (!item.includes("spirit") && !item.includes("Metaphysical")) {
             link = $(element).children("a").attr("href");
             dt = $(element)
               .children(".eds-event-card-content__sub-title")
               .text();
-            // if the date says "tomorrow" then adjust and get the date in utc format
-            console.log(dt);
-            console.log();
 
+            // if the date says "tomorrow" then adjust and get the date in utc format
             if (dt.substring(0, 8) === "Tomorrow") {
-              const eventDateUTC = d.setDate(d.getDate() + 1);
+              eventDateUTC = d.setDate(d.getDate() + 1);
             } else if (dt.substring(0, 5) === "Today") {
               //you have to construct the date the same as you do a little later
-              const eventDateUTC = d.getUTCDate();
-              console.log(d);
+              eventDateUTC = d.getDate();
+              console.log(d.getDate());
               console.log(eventDateUTC + "sdfsdfsf");
             } else {
               const dateSplit = dt.split(",");
@@ -243,9 +244,9 @@ module.exports = function (app) {
               }
 
               //construct date here and add it as a date to the object
-              const eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
+              eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
             }
-            console.log(eventDateUTC);
+            // console.log(eventDateUTC);
             eventsList.push({
               event: item,
               url: link,
@@ -254,10 +255,76 @@ module.exports = function (app) {
           }
         }
       });
-      eventsList.sort(function (a, b) {
-        return a.eventDate - b.eventDate;
+
+      let url =
+        "https://www.eventbrite.com/d/fl--sarasota/events--this-weekend/?page=2";
+      axios.get(url).then(function (response) {
+        let item = "";
+        let lastItem = "";
+        let link = "";
+        let dt = "";
+        let eventDateUTC;
+        // Load the HTML into cheerio and save it to a variable
+        // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+        var $ = cheerio.load(response.data);
+        $("div.eds-event-card-content__primary-content").each(function (
+          i,
+          element
+        ) {
+          //check to make sure there are no duplicated events
+          item = $(element).children("a").children("h3").text();
+          item = item.substring(0, item.length / 2);
+          if (item !== lastItem) {
+            lastItem = item;
+            if (!item.includes("spirit") && !item.includes("Metaphysical")) {
+              link = $(element).children("a").attr("href");
+              dt = $(element)
+                .children(".eds-event-card-content__sub-title")
+                .text();
+              // if the date says "tomorrow" then adjust and get the date in utc format
+
+              if (dt.substring(0, 8) === "Tomorrow") {
+                eventDateUTC = d.setDate(d.getDate() + 1);
+              } else if (dt.substring(0, 5) === "Today") {
+                //you have to construct the date the same as you do a little later
+                eventDateUTC = d.getDate();
+                console.log(d.getDate());
+                console.log(eventDateUTC + "sdfsdfsf");
+              } else {
+                const dateSplit = dt.split(",");
+                const daySplit = dateSplit[1].trim().split(" ");
+                const shortMonthName = daySplit[0].trim();
+                const getMonthNum = months[shortMonthName];
+                if (parseInt(getMonthNum) < currentMonth) {
+                  yearNum += 1;
+                }
+                let dayNum = parseInt(daySplit[1].trim());
+                if (dayNum < 10) {
+                  dayNum = "0" + dayNum;
+                }
+
+                //construct date here and add it as a date to the object
+                eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
+              }
+              // console.log(eventDateUTC);
+              eventsList.push({
+                event: item,
+                url: link,
+                eventDate: eventDateUTC
+              });
+            }
+          }
+        });
+
+        eventsList.sort(function (a, b) {
+          return a.eventDate - b.eventDate;
+        });
+        res.json(eventsList);
       });
-      res.json(eventsList);
+      // eventsList.sort(function (a, b) {
+      //   return a.eventDate - b.eventDate;
+      // });
+      // res.json(eventsList);
     });
   });
 
