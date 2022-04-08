@@ -224,12 +224,11 @@ module.exports = function (app) {
 
             // if the date says "tomorrow" then adjust and get the date in utc format
             if (dt.substring(0, 8) === "Tomorrow") {
-              eventDateUTC = d.setDate(d.getDate() + 1);
+              eventDateUTC = new Date(
+                new Date().getTime() + 24 * 60 * 60 * 1000
+              );
             } else if (dt.substring(0, 5) === "Today") {
-              //you have to construct the date the same as you do a little later
-              eventDateUTC = d.getDate();
-              console.log(d.getDate());
-              console.log(eventDateUTC + "sdfsdfsf");
+              eventDateUTC = new Date();
             } else {
               const dateSplit = dt.split(",");
               const daySplit = dateSplit[1].trim().split(" ");
@@ -284,12 +283,11 @@ module.exports = function (app) {
               // if the date says "tomorrow" then adjust and get the date in utc format
 
               if (dt.substring(0, 8) === "Tomorrow") {
-                eventDateUTC = d.setDate(d.getDate() + 1);
+                eventDateUTC = new Date(
+                  new Date().getTime() + 24 * 60 * 60 * 1000
+                );
               } else if (dt.substring(0, 5) === "Today") {
-                //you have to construct the date the same as you do a little later
-                eventDateUTC = d.getDate();
-                console.log(d.getDate());
-                console.log(eventDateUTC + "sdfsdfsf");
+                eventDateUTC = new Date();
               } else {
                 const dateSplit = dt.split(",");
                 const daySplit = dateSplit[1].trim().split(" ");

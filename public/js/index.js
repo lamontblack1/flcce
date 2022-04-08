@@ -21,7 +21,7 @@ $(document).ready(function () {
   });
 
   $.get("api/events", function (events) {
-    console.log(events);
+    // console.log(events);
     const months = [
       "January",
       "February",
