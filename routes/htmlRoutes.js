@@ -12,7 +12,7 @@ module.exports = function (app) {
     //so it should only need to return a static homepage
     // db.Resident.findAll({}).then(function (dbResidents) {
     res.render("index", {
-      msg: "Forest Lakes Country Club Estates"
+      msg: "FOREST LAKES COUNTRY CLUB ESTATES"
     });
     // });
   });
