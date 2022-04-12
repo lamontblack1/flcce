@@ -42,7 +42,7 @@ $(document).ready(function () {
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
 
-      const eventDate = new Date(event.eventDate); //this has to be fixed
+      const eventDate = new Date(event.eventDate);
       const dateDay = parseInt(eventDate.getMonth());
       const eventMonthDay = months[dateDay] + " " + eventDate.getDate();
       const eventLink =
@@ -51,6 +51,7 @@ $(document).ready(function () {
         "' target='_blank'>" +
         event.event +
         "</a></p>";
+
       if (eventMonthDay !== datePlacemark) {
         strHtml =
           "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
