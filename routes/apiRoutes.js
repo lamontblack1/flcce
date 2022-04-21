@@ -374,6 +374,7 @@ module.exports = function (app) {
         eventsList.sort(function (a, b) {
           return a.eventDate - b.eventDate;
         });
+        // console.log(eventsList);
         res.json(eventsList);
       });
       // eventsList.sort(function (a, b) {
@@ -448,32 +449,36 @@ module.exports = function (app) {
           dt = $(element).children(".eds-event-card-content__sub-title").text();
 
           // if the date says "tomorrow" then adjust and get the date in utc format
-          if (dt.substring(0, 8) === "Tomorrow") {
-            eventDateUTC = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-          } else if (dt.substring(0, 5) === "Today") {
-            eventDateUTC = new Date();
-          } else {
-            const dateSplit = dt.split(",");
-            const daySplit = dateSplit[1].trim().split(" ");
-            const shortMonthName = daySplit[0].trim();
-            const getMonthNum = months[shortMonthName];
-            if (parseInt(getMonthNum) < currentMonth) {
-              yearNum += 1;
-            }
-            let dayNum = parseInt(daySplit[1].trim());
-            if (dayNum < 10) {
-              dayNum = "0" + dayNum;
-            }
+          if (dt !== "") {
+            if (dt.substring(0, 8) === "Tomorrow") {
+              eventDateUTC = new Date(
+                new Date().getTime() + 24 * 60 * 60 * 1000
+              );
+            } else if (dt.substring(0, 5) === "Today") {
+              eventDateUTC = new Date();
+            } else {
+              const dateSplit = dt.split(",");
+              const daySplit = dateSplit[1].trim().split(" ");
+              const shortMonthName = daySplit[0].trim();
+              const getMonthNum = months[shortMonthName];
+              if (parseInt(getMonthNum) < currentMonth) {
+                yearNum += 1;
+              }
+              let dayNum = parseInt(daySplit[1].trim());
+              if (dayNum < 10) {
+                dayNum = "0" + dayNum;
+              }
 
-            //construct date here and add it as a date to the object
-            eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
+              //construct date here and add it as a date to the object
+              eventDateUTC = new Date(yearNum, getMonthNum - 1, dayNum);
+            }
+            // console.log(eventDateUTC);
+            eventsList.push({
+              event: item,
+              url: link,
+              eventDate: eventDateUTC
+            });
           }
-          // console.log(eventDateUTC);
-          eventsList.push({
-            event: item,
-            url: link,
-            eventDate: eventDateUTC
-          });
         }
       }
     });
