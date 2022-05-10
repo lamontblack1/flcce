@@ -71,6 +71,11 @@ module.exports = function (app) {
   app.get("/yearEndBalanceSheet", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/yearEndBalanceSheet.pdf"));
   });
+
+  app.get("/getPdf/:doc", function (req, res) {
+    let docToLoad = req.params.doc;
+    res.sendFile(path.join(__dirname, "../public/" + docToLoad + ".pdf"));
+  });
   // Load example page and pass in an example by id
   // app.get("/example/:id", function (req, res) {
   //   db.Example.findOne({ where: { id: req.params.id } }).then(function (
