@@ -7,19 +7,17 @@
       <div class="col-sm-7 order-sm-6 mb-2">
         <h1 class="text-center">{{msg}}</h1>
         <hr>
-        <h2 class="text-center font-weight-bold" >May Newsletter</h2>
-        <p>
-          It is time to start thinking about disaster preparedness for 2022. From May 28 to June 10, there are many tax exemptions on items you may need to prepare for a hurricane or other disaster.
-          <a href="/getPdf/2022DisasterTaxFree" target="_blank">Click here to see the full list of tax exempt items.</a> On the right of (or further down) this page is also a link with disaster preparedness information.
+        <h2 class="text-center font-weight-bold" >June Newsletter</h2>
+        <p> Coming Soon...
         </p>
-        <p>Please also note the new link on the right of this page (or below) with all of the tax free dates in Florida this year.</p>
+        {{!-- <p>Please also note the new link on the right of this page (or below) with all of the tax free dates in Florida this year.</p>
         <p>We hope to see some May showers this year. But if it is dry, get out and enjoy the weather!</p>   
         <figure class="figure">
           <img src="/img/may.jpg" width="70%" class="figure-img img-fluid rounded" style="margin-left: 15%;"
             alt="A generic square placeholder image with rounded corners in a figure.">
           <figcaption class="figure-caption text-center">Baby Steps</figcaption>
         </figure>
-            <p class="text-center">~ ~ ~</p><hr>
+            <p class="text-center">~ ~ ~</p><hr> --}}
        
 
         {{!-- Accordion here for old newsletters --}}
@@ -38,6 +36,26 @@
           </button>
           <div id="monthNewsletter" class="collapse mt-3" data-parent="#oldNewsletterAccordion">
           </div> --}}
+
+          <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+            data-target="#mayNewsletter" aria-expanded="false" aria-controls="mayNewsletter">
+            May Newsletter
+          </button>
+          <div id="mayNewsletter" class="collapse mt-3" data-parent="#oldNewsletterAccordion">
+              <h2 class="text-center font-weight-bold" >May Newsletter</h2>
+                <p>
+                  It is time to start thinking about disaster preparedness for 2022. From May 28 to June 10, there are many tax exemptions on items you may need to prepare for a hurricane or other disaster.
+                  <a href="/getPdf/2022DisasterTaxFree" target="_blank">Click here to see the full list of tax exempt items.</a> On the right of (or further down) this page is also a link with disaster preparedness information.
+                </p>
+                <p>Please also note the new link on the right of this page (or below) with all of the tax free dates in Florida this year.</p>
+                <p>We hope to see some May showers this year. But if it is dry, get out and enjoy the weather!</p>   
+                <figure class="figure">
+                  <img src="/img/may.jpg" width="70%" class="figure-img img-fluid rounded" style="margin-left: 15%;"
+                    alt="A generic square placeholder image with rounded corners in a figure.">
+                  <figcaption class="figure-caption text-center">Baby Steps</figcaption>
+                </figure>
+                    <p class="text-center">~ ~ ~</p><hr>
+          </div>
 
           <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
             data-target="#aprilNewsletter" aria-expanded="false" aria-controls="aprilNewsletter">
