@@ -20,8 +20,8 @@ $(document).ready(function () {
     }
   });
 
+  // get the events from event scraper api
   $.get("api/events", function (events) {
-    // console.log(events);
     const months = [
       "January",
       "February",
@@ -37,32 +37,37 @@ $(document).ready(function () {
       "December"
     ];
 
+    const crappyEvents = ["pride", "drag "];
+
     let datePlacemark = "";
     let strHtml = "";
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
 
-      const eventDate = new Date(event.eventDate);
-      const dateDay = parseInt(eventDate.getMonth());
-      const eventMonthDay = months[dateDay] + " " + eventDate.getDate();
-      const eventLink =
-        "<p class='h6'><a href='" +
-        event.url +
-        "' target='_blank'>" +
-        event.event +
-        "</a></p>";
+      const eventLower = event.event.toLowerCase().substring(0, 5);
+      if (!crappyEvents.includes(eventLower)) {
+        const eventDate = new Date(event.eventDate);
+        const dateDay = parseInt(eventDate.getMonth());
+        const eventMonthDay = months[dateDay] + " " + eventDate.getDate();
+        const eventLink =
+          "<p class='h6'><a href='" +
+          event.url +
+          "' target='_blank'>" +
+          event.event +
+          "</a></p>";
 
-      if (eventMonthDay !== datePlacemark) {
-        strHtml =
-          "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
-          eventMonthDay +
-          "</b></h5>" +
-          eventLink;
-      } else {
-        strHtml = eventLink;
+        if (eventMonthDay !== datePlacemark) {
+          strHtml =
+            "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
+            eventMonthDay +
+            "</b></h5>" +
+            eventLink;
+        } else {
+          strHtml = eventLink;
+        }
+        datePlacemark = eventMonthDay;
+        $("#eventsList").append(strHtml);
       }
-      datePlacemark = eventMonthDay;
-      $("#eventsList").append(strHtml);
     }
   });
 });
