@@ -17,12 +17,12 @@ module.exports = function (app) {
     // });
   });
 
-  // app.get("/addPosts", isAuthenticatedAsAdmin, function (req, res) {
-  //   res.render("addPosts", {
-  //     // msg: "FOREST LAKES COUNTRY CLUB ESTATES"
-  //   });
-  //   // });
-  // });
+  app.get("/addPosts", isAuthenticatedAsAdmin, function (req, res) {
+    res.render("addPosts", {
+      // msg: "FOREST LAKES COUNTRY CLUB ESTATES"
+    });
+    // });
+  });
 
   app.get("/login", function (req, res) {
     let msg = req.flash("error")[0];
