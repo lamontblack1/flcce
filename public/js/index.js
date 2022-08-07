@@ -36,7 +36,7 @@ $(document).ready(function () {
       // msgIdCounter = msgIdCounter + 1;
       let dateVal = snapshot.val().messageTime;
       // let msgTimeStamp = moment(dateVal).fromNow(false)
-      let msgTimeStamp = moment(dateVal).format("dddd MMM d h:mma");
+      let msgTimeStamp = moment(dateVal).format("dddd MMM D  h:mma");
       // console.log(msgTimeStamp);
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
@@ -93,20 +93,21 @@ $(document).ready(function () {
 
       //Put messages from others on the left
       $("#postsContainer").prepend(
-        "<div class='card' id='" +
+        "<div class='card mb-2 bg-transparent' id='" +
           snapshot.key +
           "'>" +
-          "<div class='card-header p-1 pl-2' style='background-color: #fec5bb;'>" +
+          "<div class='card-header p-1 pl-2' style='background-color: #fce4e0;'>" +
           "<span class='text-muted'>" +
           msgTimeStamp +
-          "</span><button class='btnDelete btn btn-outline-secondary font-weight-bold mb-1' type='button' style='float: right;' data='" +
-          snapshot.key +
-          "'>x</button>" +
+          "</span>" +
+          // "<button class='btnDelete btn btn-outline-secondary font-weight-bold mb-1' type='button' style='float: right;' data='" +
+          //   snapshot.key +
+          //   "'>x</button>" +
           "<h3>" +
           msgHeader +
           "</h3>" +
           "</div>" +
-          "<div class='card-body py-1 pl-2'><p class='card-title'>" +
+          "<div class='card-body py-1 pl-2 bg-transparent'><p class='card-title'>" +
           msgText +
           "</p>" +
           "</div></div>"

@@ -1,6 +1,6 @@
 <div class="container">
     <h1>New Post</h1>
-    <form action="/newPost" , method="POST">
+    <form>
         {{!-- <div class="form-group">
             <label for="exampleInputNickname1">Nickname</label>
             <input class="form-control" name="nickname">
@@ -18,11 +18,16 @@
             <input class="form-control" id="inputPic" name="pic">
         </div> --}}
 
-        <button type="submit" class="btn btn-primary" value="Sign Up">Submit</button>
+        <button class="btn btn-primary" id="btnSubmit">Submit</button>
     </form>
+    <hr>
+    <div id="postsContainer">
+        </div> 
     {{!-- {{#if message}}
     <p class="text-danger">
         {{message}}
     </p>
     {{/if}} --}}
 </div>
+
+<script src="/js/addPosts.js"></script>
