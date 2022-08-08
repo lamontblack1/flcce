@@ -121,7 +121,8 @@ $(document).ready(function () {
   $("#btnSubmit").on("click", function (event) {
     event.preventDefault();
     if ($("#inputHeading").val() !== "" && $("#inputPost").val() !== "") {
-      const post = $("#inputPost").val();
+      let post = $("#inputPost").val();
+      post = urlify(post);
       const separateLines = post.split(/\r?\n|\r|\n/g);
       let formattedPost = "";
       for (let i = 0; i < separateLines.length; i++) {
@@ -132,7 +133,6 @@ $(document).ready(function () {
           formattedPost += element;
         }
       }
-      formattedPost = urlify(formattedPost);
       const heading = $("#inputHeading").val();
       postsListRef.push({
         msgHeader: heading,
