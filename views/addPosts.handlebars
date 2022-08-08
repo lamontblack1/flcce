@@ -10,7 +10,7 @@
             <input class="form-control" id="inputHeading" aria-describedby="heading text" name="heading">
         </div>
         <div class="form-group">
-            <label for="Post">Message to Post</label>
+            <label for="Post">Message to Post  (Currently, line breaks and hyperlinks, see below, are the only formatting that will be retained in the post)</label>
             <textarea class="form-control" id="inputPost" name="Post" rows="4"></textarea>
         </div>
         {{!-- <div class="form-group">
@@ -18,7 +18,8 @@
             <input class="form-control" id="inputPic" name="pic">
         </div> --}}
 
-        <button class="btn btn-primary" id="btnSubmit">Submit</button>
+        <button class="btn btn-primary mr-3" id="btnSubmit">Submit</button>
+        <span>To include a hyperlink, first use &quot;http://&quot;, like &quot;http://google.com&quot;. It will appear as a blue link in the post.</span>
     </form>
     <hr>
     <div id="postsContainer">

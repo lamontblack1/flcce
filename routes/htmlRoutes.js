@@ -30,14 +30,26 @@ module.exports = function (app) {
       message: msg
     });
   });
-  //passport
+  //passport original
+  // app.post(
+  //   "/login",
+  //   passport.authenticate("local-signin", {
+  //     successRedirect: "/api/residents",
+  //     failureRedirect: "/login",
+  //     failureFlash: true
+  //   })
+  // );
+
+  //trying dynamic redirect based on origin url
   app.post(
     "/login",
     passport.authenticate("local-signin", {
-      successRedirect: "/api/residents",
       failureRedirect: "/login",
       failureFlash: true
-    })
+    }),
+    function (req, res) {
+      res.redirect(req.session.returnTo);
+    }
   );
 
   app.get("/signup", isAuthenticatedAsAdmin, function (req, res) {
