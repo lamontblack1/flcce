@@ -148,8 +148,14 @@ $(document).ready(function () {
   });
 
   $("body").on("click", "button.btnDelete", function () {
-    const msgKey = $(this).attr("data");
-    db.ref("/flcce/posts/" + msgKey).remove();
-    $("#" + msgKey).remove();
+    if (
+      confirm(
+        "ARE YOU SURE you want to delete this post? Once you delete it you cannot undo it."
+      )
+    ) {
+      const msgKey = $(this).attr("data");
+      db.ref("/flcce/posts/" + msgKey).remove();
+      $("#" + msgKey).remove();
+    }
   });
 });
