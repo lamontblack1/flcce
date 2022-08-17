@@ -818,8 +818,16 @@
           </div>
 
           <div class="card" id="eventsCard">
-          <div class="card-body" id="eventsList">
-            <h5 class="card-title text-center">Upcoming Events</h5>
+             {{!-- eventsList id was here in the card body --}}
+          <div class="card-body"> 
+            {{!-- <h5 class="card-title text-center">Upcoming Events</h5> --}}
+            <button class="btn btn-link btn-block text-center pl-0 collapsed" type="button" data-toggle="collapse"
+                  data-target="#eventsList" aria-expanded="false" aria-controls="eventsList">
+                  View Upcoming Events
+            </button>
+            <div id="eventsList" class="collapse">
+
+            </div>
             {{!-- <h6 class="card-subtitle mb-2 text-muted text-center">Today at Village Plaza</h6> --}}
             {{!-- <hr> --}}
           </div>
