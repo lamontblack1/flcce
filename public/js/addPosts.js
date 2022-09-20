@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 // Create a reference the database
 let db = firebase.database();
 
-// Create a root reference, but dont' need unless you use pictures
+// Create a root reference
 var storageRef = firebase.storage().ref();
 
 //************************************************************
@@ -125,6 +125,7 @@ $(document).ready(function () {
       post = urlify(post);
       const separateLines = post.split(/\r?\n|\r|\n/g);
       let formattedPost = "";
+      let URL = "";
       for (let i = 0; i < separateLines.length; i++) {
         const element = separateLines[i];
         if (i !== separateLines.length - 1) {
@@ -134,14 +135,66 @@ $(document).ready(function () {
         }
       }
       const heading = $("#inputHeading").val();
-      postsListRef.push({
-        msgHeader: heading,
-        msgText: formattedPost,
-        messageTime: firebase.database.ServerValue.TIMESTAMP
-      });
+      //If there is a file to upload
+      if ($("#fileInput").val() !== "") {
+        //upload and then push message in returned promise
+        const selectedFile = document.getElementById("fileInput").files[0];
 
-      $("#inputHeading").val("");
-      $("#inputPost").val("");
+        // Create a reference to 'mountains.jpg'
+        // var picRef = storageRef.child(selectedFile.name);
+
+        // Create a reference to 'images/mountains.jpg'
+        const fileImageRef = storageRef.child("flcce/" + selectedFile.name);
+
+        fileImageRef.put(selectedFile).then((snapshot) => {
+          console.log("uploaded!");
+          fileImageRef
+            // .child("images/" + selectedFile.name)
+            .getDownloadURL()
+            .then((url) => {
+              // `url` is the download URL for 'images/stars.jpg'
+
+              // This can be downloaded directly:
+              // var xhr = new XMLHttpRequest();
+              // xhr.responseType = "blob";
+              // xhr.onload = (event) => {
+              //   var blob = xhr.response;
+              // };
+              // xhr.open("GET", url);
+              // xhr.send();
+
+              // Or inserted into an <img> element
+              //clear the file input
+              //send message with the URL for the picture or file
+              const linkElement =
+                "<a href=" +
+                url +
+                " target='_blank'>" +
+                selectedFile.name +
+                "</a>";
+              formattedPost += "<br>" + linkElement;
+              postsListRef.push({
+                msgHeader: heading,
+                msgText: formattedPost,
+                messageTime: firebase.database.ServerValue.TIMESTAMP
+              });
+
+              $("#inputHeading").val("");
+              $("#inputPost").val("");
+              $("#fileInput").val("");
+            });
+        });
+      } else {
+        postsListRef.push({
+          msgHeader: heading,
+          msgText: formattedPost,
+          messageTime: firebase.database.ServerValue.TIMESTAMP
+        });
+
+        $("#inputHeading").val("");
+        $("#inputPost").val("");
+        $("#fileInput").val("");
+      }
     } else {
       alert("Heading or Message is empty!");
     }
