@@ -35,6 +35,7 @@ $(document).ready(function () {
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
       let msgText = snapshot.val().msgText;
+      const fileName = snapshot.val().postedFileName;
       //this can help add a picture
       // let imgLine =
       //   "<img src='./images/" +
@@ -96,6 +97,8 @@ $(document).ready(function () {
           "</span>" +
           "<button class='btnDelete btn btn-outline-secondary font-weight-bold mb-1' id='#btnDelete' type='button' style='float: right;' data='" +
           snapshot.key +
+          "' data-file-name='" +
+          fileName +
           "'>x</button>" +
           "<h3>" +
           msgHeader +
@@ -176,7 +179,8 @@ $(document).ready(function () {
               postsListRef.push({
                 msgHeader: heading,
                 msgText: formattedPost,
-                messageTime: firebase.database.ServerValue.TIMESTAMP
+                messageTime: firebase.database.ServerValue.TIMESTAMP,
+                postedFileName: selectedFile.name
               });
 
               $("#inputHeading").val("");
@@ -188,7 +192,8 @@ $(document).ready(function () {
         postsListRef.push({
           msgHeader: heading,
           msgText: formattedPost,
-          messageTime: firebase.database.ServerValue.TIMESTAMP
+          messageTime: firebase.database.ServerValue.TIMESTAMP,
+          postedFileName: ""
         });
 
         $("#inputHeading").val("");
@@ -203,12 +208,24 @@ $(document).ready(function () {
   $("body").on("click", "button.btnDelete", function () {
     if (
       confirm(
-        "ARE YOU SURE you want to delete this post? Once you delete it you cannot undo it."
+        "ARE YOU SURE you want to delete this post? Once you delete it you cannot undo it. It will also delete the uploaded file if there is one."
       )
     ) {
       const msgKey = $(this).attr("data");
+      const postedFileName = $(this).data("file-name");
       db.ref("/flcce/posts/" + msgKey).remove();
       $("#" + msgKey).remove();
+      if (postedFileName) {
+        const postedFileRef = storageRef.child("flcce/" + postedFileName);
+        postedFileRef
+          .delete()
+          .then(() => {
+            // File deleted successfully
+          })
+          .catch((error) => {
+            // Uh-oh, an error occurred!
+          });
+      }
     }
   });
 });
