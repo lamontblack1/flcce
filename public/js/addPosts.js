@@ -30,7 +30,7 @@ $(document).ready(function () {
       // msgIdCounter = msgIdCounter + 1;
       let dateVal = snapshot.val().messageTime;
       // let msgTimeStamp = moment(dateVal).fromNow(false)
-      let msgTimeStamp = moment(dateVal).format("dddd MMM D  h:mma");
+      let msgTimeStamp = moment(dateVal).format("MMMM D");
       // console.log(msgTimeStamp);
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
@@ -92,7 +92,7 @@ $(document).ready(function () {
           snapshot.key +
           "'>" +
           "<div class='card-header p-1 pl-2' style='background-color: #fcded8;'>" +
-          "<span class='text-muted'>" +
+          "<span class='text-muted'>Posted " +
           msgTimeStamp +
           "</span>" +
           "<button class='btnDelete btn btn-outline-secondary font-weight-bold mb-1' id='#btnDelete' type='button' style='float: right;' data='" +

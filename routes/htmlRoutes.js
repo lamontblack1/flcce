@@ -26,6 +26,7 @@ module.exports = function (app) {
 
   app.get("/login", function (req, res) {
     let msg = req.flash("error")[0];
+    req.session.returnTo = "/api/residents";
     res.render("login", {
       message: msg
     });
@@ -48,6 +49,9 @@ module.exports = function (app) {
       failureFlash: true
     }),
     function (req, res) {
+      if (req.session.returnTo === "login") {
+        req.session.returnTo = "/api/residents";
+      }
       res.redirect(req.session.returnTo);
     }
   );
