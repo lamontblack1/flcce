@@ -11,7 +11,7 @@ body {
   background-size: 12%;
   background-repeat: no-repeat;
   background-origin: border-box;
-  background-position: 0% 2%;
+  background-position: 0px 20px;
   /* color: rgba(40, 79, 54); */
 }
 
@@ -38,7 +38,7 @@ p {
 
 #bogo-card {
   position: relative;
-  top: 9%;
+  top: 5%;
 }
 
 /* .resident-container {
@@ -46,8 +46,12 @@ p {
   background-color: #fafaf6;
 } */
 .navbar {
-  background-color: #fec5bb;
+  background-color: #fdc9bf;
   color: rgb(122, 151, 132);
+}
+
+.card-header {
+  background-color: #fdc9bf;
 }
 
 /* for old to do list, to be updated */
@@ -100,7 +104,8 @@ input.new-item:focus {
   } */
 
   body {
-    background-position: 95% 1.5%;
+    background-size: 10%;
+    background-position: 0% .7%;
   }
 
   #bogo-card {

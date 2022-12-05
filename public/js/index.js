@@ -96,7 +96,7 @@ $(document).ready(function () {
         "<div class='card mb-2 bg-transparent' id='" +
           snapshot.key +
           "'>" +
-          "<div class='card-header p-1 pl-2' style='background-color: #fce4e0;'>" +
+          "<div class='card-header p-1 pl-2'>" +
           "<span class='text-muted' style='float: right'>Posted " +
           msgTimeStamp +
           "</span>" +
