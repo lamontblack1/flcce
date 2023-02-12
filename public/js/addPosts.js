@@ -35,7 +35,19 @@ $(document).ready(function () {
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
       let msgText = snapshot.val().msgText;
-      const fileName = snapshot.val().postedFileName;
+      let fileName;
+      let fileNames;
+      if (snapshot.val().postedFileName) {
+        fileName = snapshot.val().postedFileName;
+      } else {
+        fileName = "";
+      }
+      if (snapshot.val().postedFileNames) {
+        fileNames = snapshot.val().postedFileNames;
+        fileNames = JSON.stringify(fileNames);
+      } else {
+        fileNames = "";
+      }
       //this can help add a picture
       // let imgLine =
       //   "<img src='./images/" +
@@ -99,6 +111,8 @@ $(document).ready(function () {
           snapshot.key +
           "' data-file-name='" +
           fileName +
+          "' data-file-names='" +
+          fileNames +
           "'>x</button>" +
           "<h3>" +
           msgHeader +
@@ -121,7 +135,7 @@ $(document).ready(function () {
     }
   );
 
-  $("#btnSubmit").on("click", function (event) {
+  $("#btnSubmitOrig").on("click", function (event) {
     event.preventDefault();
     if ($("#inputHeading").val() !== "" && $("#inputPost").val() !== "") {
       let post = $("#inputPost").val();
@@ -141,7 +155,16 @@ $(document).ready(function () {
       //If there is a file to upload
       if ($("#fileInput").val() !== "") {
         //upload and then push message in returned promise
+        let filesToPost = [];
+        let noOfFilesToPost = document.getElementById("fileInput").files.length;
+        for (let i = 0; i < noOfFilesToPost; i++) {
+          const element = document.getElementById("fileInput").files[i];
+          filesToPost.push(element);
+        }
         const selectedFile = document.getElementById("fileInput").files[0];
+        const extension = selectedFile.name.split(".")[1];
+
+        //loop here for pics if necessary
 
         // Create a reference to 'mountains.jpg'
         // var picRef = storageRef.child(selectedFile.name);
@@ -205,6 +228,118 @@ $(document).ready(function () {
     }
   });
 
+  $("#btnSubmit").on("click", function (event) {
+    event.preventDefault();
+    if ($("#inputHeading").val() !== "" && $("#inputPost").val() !== "") {
+      let post = $("#inputPost").val();
+      post = urlify(post);
+      const separateLines = post.split(/\r?\n|\r|\n/g);
+      let formattedPost = "";
+      let URL = "";
+      for (let i = 0; i < separateLines.length; i++) {
+        const element = separateLines[i];
+        if (i !== separateLines.length - 1) {
+          formattedPost += element + "<br>";
+        } else {
+          formattedPost += element;
+        }
+      }
+      const heading = $("#inputHeading").val();
+      //If there is a file to upload
+      if ($("#fileInput").val() !== "") {
+        //upload and then push message in returned promise
+        let fileNames = [];
+        let URLs = [];
+        let iCounter = 0;
+        let noOfFilesToPost = document.getElementById("fileInput").files.length;
+        for (let i = 0; i < noOfFilesToPost; i++) {
+          const selectedFile = document.getElementById("fileInput").files[i];
+          // const selectedFile = document.getElementById("fileInput").files[0];
+          const fileImageRef = storageRef.child("flcce/" + selectedFile.name);
+
+          //loop here for pics if necessary
+
+          // Create a reference to 'mountains.jpg'
+          // var picRef = storageRef.child(selectedFile.name);
+
+          // Create a reference to 'images/mountains.jpg'
+
+          fileImageRef.put(selectedFile).then((snapshot) => {
+            console.log("uploaded!");
+            fileImageRef
+              // .child("images/" + selectedFile.name)
+              .getDownloadURL()
+              .then((url) => {
+                // `url` is the download URL for 'images/stars.jpg'
+
+                // This can be downloaded directly:
+                // var xhr = new XMLHttpRequest();
+                // xhr.responseType = "blob";
+                // xhr.onload = (event) => {
+                //   var blob = xhr.response;
+                // };
+                // xhr.open("GET", url);
+                // xhr.send();
+
+                // Or inserted into an <img> element
+                //clear the file input
+                //send message with the URL for the picture or file
+                iCounter += 1;
+                fileNames.push(selectedFile.name);
+
+                URLs.push(url);
+                const extension = selectedFile.name.split(".")[1];
+                //format the message as picture or other file
+                if (extension === "jpg" || extension === "jpeg") {
+                  const imgElement =
+                    "<img src='" +
+                    url +
+                    "' class='center-image rounded mb-2' alt='...'>";
+                  formattedPost += "<br>" + imgElement;
+                } else {
+                  const linkElement =
+                    "<a href=" +
+                    url +
+                    " target='_blank'>" +
+                    selectedFile.name +
+                    "</a>";
+                  formattedPost += "<br>" + linkElement;
+                }
+
+                if (iCounter === noOfFilesToPost) {
+                  postsListRef.push({
+                    msgHeader: heading,
+                    msgText: formattedPost,
+                    messageTime: firebase.database.ServerValue.TIMESTAMP,
+                    postedFileNames: fileNames,
+                    allUrls: URLs
+                  });
+
+                  $("#inputHeading").val("");
+                  $("#inputPost").val("");
+                  $("#fileInput").val("");
+                }
+              });
+          });
+        }
+      } else {
+        postsListRef.push({
+          msgHeader: heading,
+          msgText: formattedPost,
+          messageTime: firebase.database.ServerValue.TIMESTAMP,
+          postedFileName: "",
+          postedFileNames: ""
+        });
+
+        $("#inputHeading").val("");
+        $("#inputPost").val("");
+        $("#fileInput").val("");
+      }
+    } else {
+      alert("Heading or Message is empty!");
+    }
+  });
+
   $("body").on("click", "button.btnDelete", function () {
     if (
       confirm(
@@ -213,6 +348,7 @@ $(document).ready(function () {
     ) {
       const msgKey = $(this).attr("data");
       const postedFileName = $(this).data("file-name");
+      const postedFileNames = $(this).data("file-names");
       db.ref("/flcce/posts/" + msgKey).remove();
       $("#" + msgKey).remove();
       if (postedFileName) {
@@ -225,6 +361,22 @@ $(document).ready(function () {
           .catch((error) => {
             // Uh-oh, an error occurred!
           });
+      }
+
+      if (postedFileNames) {
+        //need JSON.parse(postedFileNames) here??
+        // postedFileNames = JSON.parse(postedFileNames); Guess its not needed
+        for (let i = 0; i < postedFileNames.length; i++) {
+          const postedFileRef = storageRef.child("flcce/" + postedFileNames[i]);
+          postedFileRef
+            .delete()
+            .then(() => {
+              // File deleted successfully
+            })
+            .catch((error) => {
+              // Uh-oh, an error occurred!
+            });
+        }
       }
     }
   });

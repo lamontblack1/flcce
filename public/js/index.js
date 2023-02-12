@@ -20,15 +20,36 @@ var storageRef = firebase.storage().ref();
 
 //************************************************************
 const postsListRef = db.ref("/flcce/posts");
-
+const boardListRef = db.ref("/flcce/board");
+let browserIsSafari = false;
 // Get references to page elements
 $(document).ready(function () {
+  if (navigator.sayswho.includes("Safari")) {
+    browserIsSafari = true;
+  }
+
   // postsListRef.push({
   //   msgHeader: "New Posts Feature Under Construction",
   //   msgText:
   //     "We are currently working on a new feature for administrators to be able to add posts in the future. Please stay tuned!",
   //   messageTime: firebase.database.ServerValue.TIMESTAMP
   // });
+
+  boardListRef.on(
+    "child_added",
+    function (snapshot) {
+      $("#director" + snapshot.val().order).prepend(
+        "<p class='text-center board-p'>" +
+          snapshot.val().name +
+          "</p><p class='text-center'>" +
+          snapshot.val().title +
+          "</p>"
+      );
+    },
+    function (errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    }
+  );
 
   postsListRef.limitToLast(20).on(
     "child_added",
@@ -167,8 +188,12 @@ $(document).ready(function () {
       const eventLower = event.event.toLowerCase().substring(0, 5);
       if (!crappyEvents.includes(eventLower)) {
         const eventDate = new Date(event.eventDate);
-        const dateDay = parseInt(eventDate.getMonth());
-        const eventMonthDay = months[dateDay] + " " + eventDate.getDate();
+        const dateMonth = parseInt(eventDate.getMonth());
+        let dateDay = eventDate.getDate();
+        if (browserIsSafari) {
+          dateDay += 1;
+        }
+        const eventMonthDay = months[dateMonth] + " " + dateDay;
         const eventLink =
           "<p class='h6'><a href='" +
           event.url +
@@ -201,7 +226,7 @@ var queryURL =
   "zip=34232&units=imperial&appid=" +
   APIKey;
 
-// Here we run our AJAX call to
+// Here we run our AJAX call to openweathermap
 $.ajax({
   url: queryURL,
   method: "GET"
@@ -303,6 +328,25 @@ $.getJSON(
     );
   }
 );
+
+navigator.sayswho = (function () {
+  var ua = navigator.userAgent;
+  var tem;
+  var M =
+    ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) ||
+    [];
+  if (/trident/i.test(M[1])) {
+    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+    return "IE " + (tem[1] || "");
+  }
+  if (M[1] === "Chrome") {
+    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+    if (tem != null) return tem.slice(1).join(" ").replace("OPR", "Opera");
+  }
+  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
+  if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+  return M.join(" ");
+})();
 
 // Add event listeners to the submit and delete buttons
 // $submitBtn.on("click", handleFormSubmit);
