@@ -20,10 +20,11 @@ var storageRef = firebase.storage().ref();
 
 //************************************************************
 const postsListRef = db.ref("/flcce/posts");
+const boardListRef = db.ref("/flcce/board");
 
 // Get references to page elements
 $(document).ready(function () {
-  postsListRef.limitToLast(40).on(
+  postsListRef.limitToLast(100).on(
     "child_added",
     function (snapshot) {
       //   console.log(snapshot.val());
@@ -129,6 +130,17 @@ $(document).ready(function () {
       //   document.getElementById("#post" + snapshot.key).innerHTML = msgText;
 
       // Handle the errors
+    },
+    function (errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    }
+  );
+
+  boardListRef.on(
+    "child_added",
+    function (snapshot) {
+      $("#name" + snapshot.val().order).val(snapshot.val().name);
+      $("#title" + snapshot.val().order).val(snapshot.val().title);
     },
     function (errorObject) {
       console.log("Errors handled: " + errorObject.code);
@@ -338,6 +350,19 @@ $(document).ready(function () {
     } else {
       alert("Heading or Message is empty!");
     }
+  });
+
+  $(".board-btn").on("click", function (event) {
+    const orderNo = $(this).data("order-number");
+    db.ref("/flcce/board/" + orderNo)
+      .set({
+        order: orderNo,
+        name: $("#name" + orderNo).val(),
+        title: $("#title" + orderNo).val()
+      })
+      .then((snapshot) => {
+        alert("Updated!");
+      });
   });
 
   $("body").on("click", "button.btnDelete", function () {
