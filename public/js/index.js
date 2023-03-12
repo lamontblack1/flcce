@@ -22,6 +22,22 @@ var storageRef = firebase.storage().ref();
 const postsListRef = db.ref("/flcce/posts");
 const boardListRef = db.ref("/flcce/board");
 let browserIsSafari = false;
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
 // Get references to page elements
 $(document).ready(function () {
   if (navigator.sayswho.includes("Safari")) {
@@ -55,9 +71,16 @@ $(document).ready(function () {
     "child_added",
     function (snapshot) {
       // msgIdCounter = msgIdCounter + 1;
-      let dateVal = snapshot.val().messageTime;
+      // let dateVal = snapshot.val().messageTime;
+      let msgDate = new Date(snapshot.val().messageTime)
+      // msgDate = msgDate.parse(snapshot.val().messageTime)
+      let msgDay = msgDate.getDate();
+      msgDay = parseInt(msgDay) + 1
+      const msgMonth = msgDate.getMonth()
+      const msgTimeStamp = months[msgMonth] + " " + msgDay;
+
       // let msgTimeStamp = moment(dateVal).fromNow(false)
-      let msgTimeStamp = moment(dateVal).format("MMMM D");
+      // let msgTimeStamp = moment(dateVal).format("MMMM D");
       // console.log(msgTimeStamp);
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
@@ -163,20 +186,7 @@ $(document).ready(function () {
 
   // get the events from event scraper api
   $.get("api/events", function (events) {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ];
+    
 
     const crappyEvents = ["pride", "drag "];
 
@@ -190,9 +200,9 @@ $(document).ready(function () {
         const eventDate = new Date(event.eventDate);
         const dateMonth = parseInt(eventDate.getMonth());
         let dateDay = eventDate.getDate();
-        if (browserIsSafari) {
-          dateDay += 1;
-        }
+        // if (browserIsSafari) {
+        //   dateDay += 1;
+        // }
         const eventMonthDay = months[dateMonth] + " " + dateDay;
         const eventLink =
           "<p class='h6'><a href='" +
