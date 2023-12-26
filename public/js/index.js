@@ -185,46 +185,46 @@ $(document).ready(function () {
   });
 
   // get the events from event scraper api
-  $.get("api/events", function (events) {
+  // $.get("api/events", function (events) {
     
+  //   $("#eventsList").append("Test");
+  //   const crappyEvents = ["pride", "drag "];
 
-    const crappyEvents = ["pride", "drag "];
+  //   let datePlacemark = "";
+  //   let strHtml = "";
+  //   for (let i = 0; i < events.length; i++) {
+  //     const event = events[i];
 
-    let datePlacemark = "";
-    let strHtml = "";
-    for (let i = 0; i < events.length; i++) {
-      const event = events[i];
+  //     const eventLower = event.event.toLowerCase().substring(0, 5);
+  //     if (!crappyEvents.includes(eventLower)) {
+  //       const eventDate = new Date(event.eventDate);
+  //       const dateMonth = parseInt(eventDate.getMonth());
+  //       let dateDay = eventDate.getDate();
+  //       // if (browserIsSafari) {
+  //       //   dateDay += 1;
+  //       // }
+  //       const eventMonthDay = months[dateMonth] + " " + dateDay;
+  //       const eventLink =
+  //         "<p class='h6'><a href='" +
+  //         event.url +
+  //         "' target='_blank'>" +
+  //         event.event +
+  //         "</a></p>";
 
-      const eventLower = event.event.toLowerCase().substring(0, 5);
-      if (!crappyEvents.includes(eventLower)) {
-        const eventDate = new Date(event.eventDate);
-        const dateMonth = parseInt(eventDate.getMonth());
-        let dateDay = eventDate.getDate();
-        // if (browserIsSafari) {
-        //   dateDay += 1;
-        // }
-        const eventMonthDay = months[dateMonth] + " " + dateDay;
-        const eventLink =
-          "<p class='h6'><a href='" +
-          event.url +
-          "' target='_blank'>" +
-          event.event +
-          "</a></p>";
-
-        if (eventMonthDay !== datePlacemark) {
-          strHtml =
-            "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
-            eventMonthDay +
-            "</b></h5>" +
-            eventLink;
-        } else {
-          strHtml = eventLink;
-        }
-        datePlacemark = eventMonthDay;
-        $("#eventsList").append(strHtml);
-      }
-    }
-  });
+  //       if (eventMonthDay !== datePlacemark) {
+  //         strHtml =
+  //           "<hr class='bogo'><h5 class='card-subtitle mt-2 mb-2 text-muted text-center'><b>" +
+  //           eventMonthDay +
+  //           "</b></h5>" +
+  //           eventLink;
+  //       } else {
+  //         strHtml = eventLink;
+  //       }
+  //       datePlacemark = eventMonthDay;
+  //       $("#eventsList").append(strHtml);
+  //     }
+  //   }
+  // });
 });
 
 //get the weather and put it on the page
