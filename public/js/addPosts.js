@@ -31,6 +31,7 @@ $(document).ready(function () {
       // msgIdCounter = msgIdCounter + 1;
       let dateVal = snapshot.val().messageTime;
       // let msgTimeStamp = moment(dateVal).fromNow(false)
+      
       let msgTimeStamp = moment(dateVal).format("MMMM D");
       // console.log(msgTimeStamp);
       let msgHeader = snapshot.val().msgHeader;

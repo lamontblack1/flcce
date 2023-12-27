@@ -75,9 +75,10 @@ $(document).ready(function () {
       let msgDate = new Date(snapshot.val().messageTime)
       // msgDate = msgDate.parse(snapshot.val().messageTime)
       let msgDay = msgDate.getDate();
-      msgDay = parseInt(msgDay) + 1
-      const msgMonth = msgDate.getMonth()
-      const msgTimeStamp = months[msgMonth] + " " + msgDay;
+      msgDay = parseInt(msgDay)
+      const msgMonth = msgDate.getMonth()+1
+      const msgYear = msgDate.getFullYear()
+      const msgTimeStamp = msgMonth + "/" + msgDay + "/" + msgYear;
 
       // let msgTimeStamp = moment(dateVal).fromNow(false)
       // let msgTimeStamp = moment(dateVal).format("MMMM D");
@@ -301,7 +302,7 @@ $.ajax({
           "<p class='h6'>UV Index This Hour: " + data.current.uvi + "</p>"
         );
         $weather.append(
-          "<hr><p class='text-center h6'>Rain Chance | Hi-Lo Temp</p>"
+          "<hr><p class='text-center h6'>Rain Chance | Lo-Hi Temp</p>"
         );
         for (let i = 0; i < 5; i++) {
           const dt = DateTime.fromSeconds(data.daily[i].dt);
