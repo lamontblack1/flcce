@@ -29,10 +29,14 @@ $(document).ready(function () {
     function (snapshot) {
       //   console.log(snapshot.val());
       // msgIdCounter = msgIdCounter + 1;
-      let dateVal = snapshot.val().messageTime;
-      // let msgTimeStamp = moment(dateVal).fromNow(false)
-      
-      let msgTimeStamp = moment(dateVal).format("MMMM D");
+      msgDate = new Date(snapshot.val().messageTime)
+      // msgDate = msgDate.parse(snapshot.val().messageTime)
+      let msgDay = msgDate.getDletate();
+      msgDay = parseInt(msgDay)
+      const msgMonth = msgDate.getMonth()+1
+      const msgYear = msgDate.getFullYear()
+      const msgTimeStamp = msgMonth + "/" + msgDay + "/" + msgYear;
+
       // console.log(msgTimeStamp);
       let msgHeader = snapshot.val().msgHeader;
       // msgPlayerName = msgPlayerName.toLowerCase().trim();
