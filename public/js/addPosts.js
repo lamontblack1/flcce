@@ -31,7 +31,7 @@ $(document).ready(function () {
       // msgIdCounter = msgIdCounter + 1;
       msgDate = new Date(snapshot.val().messageTime)
       // msgDate = msgDate.parse(snapshot.val().messageTime)
-      let msgDay = msgDate.getDletate();
+      let msgDay = msgDate.getDate();
       msgDay = parseInt(msgDay)
       const msgMonth = msgDate.getMonth()+1
       const msgYear = msgDate.getFullYear()
